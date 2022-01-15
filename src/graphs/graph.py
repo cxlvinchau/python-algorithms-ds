@@ -46,7 +46,12 @@ class WeightedGraph(Graph):
         super().__init__()
         self.weights = dict()
 
-    def add_edge(self, e: Tuple[int, int], weight=None):
+    def add_edge(self, e: Tuple[int, int], weight=1):
         super().add_edge(e)
-        if weight is not None:
-            self.weights[e] = weight
+        self.weights[e] = weight
+
+    def to_dot(self):
+        r = "digraph {\n"
+        for s, t in self.edges:
+            r += f"{s} -> {t} [label=\"{self.weights[(s,t)]}\"]\n"
+        return r +"}"
